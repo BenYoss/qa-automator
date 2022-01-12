@@ -5,6 +5,10 @@
   "repository": "https://github.com/BenYoss/qa-automator.git",
   "author": "benyoss <benyoss4@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "webpack --watch --mode=development",
+    "prod": "webpack --watch --mode=production"
+  },
   "dependencies": {
     "@babel/core": "^7.16.7",
     "@babel/preset-env": "^7.16.8",
