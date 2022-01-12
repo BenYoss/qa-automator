@@ -1,0 +1,8 @@
+{
+  "name": "qa-automator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/BenYoss/qa-automator.git",
+  "author": "benyoss <benyoss4@gmail.com>",
+  "license": "MIT"
+}
