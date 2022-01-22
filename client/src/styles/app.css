@@ -1,0 +1,77 @@
+.main-body {
+    display:flex;
+    flex-direction: row;
+}
+
+.line-correct {
+    background-color: rgb(50, 135, 50);
+    color:white;
+    margin: 10px, 10px, 10px, 10px;
+    border: 2px solid black;
+}
+
+.line-wrong {
+    background-color: rgb(171, 45, 45);
+    color:white;
+    margin: 10px, 10px, 10px, 10px;
+    border: 2px solid black;
+}
+
+.line-container {
+    flex-direction: row;
+    text-align: center;
+    display: flex;
+    row-gap: 10px;
+    flex-wrap:wrap;
+    max-width: 500px;
+    justify-content: center;
+    overflow-y: scroll;
+    max-height: 80vh;
+}
+
+.results {
+    display:flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.canvas-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px, 10px, 10px, 10px;
+    flex-direction: row;
+}
+
+.form-container {
+    padding: 10px, 10px, 10px, 10px;
+    display:flex;
+    justify-content: center;
+}
+
+.title-container {
+    width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.input {
+    display: flex;
+    margin-left: 10px;
+    max-width: fit-content;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.results {
+    
+}
+
+#header {
+    background-color: rgb(46, 46, 46);
+    color:white;
+    font-weight: bolder;
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}

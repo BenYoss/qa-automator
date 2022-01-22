@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { pdfjs } from 'react-pdf';
 import axios from 'axios';
+import '../styles/app.css';
 
 export default function App() {
   const [mainUpload, setMainUpload] = useState(null);
@@ -11,6 +12,7 @@ export default function App() {
   const [compUpload, setCompUpload] = useState(null);
   const [compData, setCompData] = useState(null);
   const [result, setResult] = useState(false);
+  const [resultData, setResultData] = useState([]);
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
   /**
@@ -25,7 +27,10 @@ export default function App() {
        */
       if (mainData.includes(compData[i])) {
         bool = true;
+        resultData.push(true);
+        setResultData([...resultData, true]);
       } else {
+        setResultData([...resultData, false]);
         bool = false;
         break;
       }
@@ -131,18 +136,44 @@ export default function App() {
 
   return (
     <div id="main-container">
-      <h1>QA Automator</h1>
-      {mainUpload && (
-        <h3>{mainUpload.name}</h3>
-      )}
-      <canvas id="pdf-canvas-main" style={{ maxWidth: '700px' }} />
-      <canvas id="pdf-canvas-comp" style={{ maxWidth: '700px' }} />
-      <input type="file" onChange={(e) => setMainUpload(e.target.files[0])} />
-      <button type="submit" onClick={() => uploadFile('main')}>Submit main PDF</button>
-      <input type="file" onChange={(e) => setCompUpload(e.target.files[0])} />
-      <button type="submit" onClick={() => uploadFile('comp')}>Submit comparison PDF</button>
-      {/* Outputs the comparison boolean result */}
-      <h2>{mainUpload && compData && result ? 'TRUE' : 'FALSE'}</h2>
+      <h1 id="header">QA Automator</h1>
+      <div className="title-container">
+        {mainData && (
+          <h3>{mainUpload.name}</h3>
+        )}
+        {compData && (
+          <h3>{compUpload.name}</h3>
+        )}
+      </div>
+      <div className="main-body">
+        <div className="canvas-cluster">
+          {/* Outputs the comparison boolean result */}
+          {result ? (
+            <div className="results">
+              <h2 className={mainUpload && compData && result ? 'line-correct' : 'line-wrong'}>{mainUpload && compData && result ? 'TRUE' : 'FALSE'}</h2>
+            </div>
+          ) : null}
+          <div className="canvas-container">
+            <canvas className="canvas" id="pdf-canvas-main" style={{ maxWidth: '500px' }} />
+            <canvas className="canvas" id="pdf-canvas-comp" style={{ maxWidth: '500px' }} />
+          </div>
+          <div className="form-container">
+            <div className="main input">
+              <input type="file" onChange={(e) => { setMainUpload(e.target.files[0]); setResultData([]); }} />
+              <button type="submit" onClick={() => uploadFile('main')}>Submit main PDF</button>
+            </div>
+            <div className="comp input">
+              <input type="file" onChange={(e) => { setCompUpload(e.target.files[0]); setResultData([]); }} />
+              <button type="submit" onClick={() => uploadFile('comp')}>Submit comparison PDF</button>
+            </div>
+          </div>
+        </div>
+        <div className="line-container">
+          {compData && compData.map((line, i) => (
+            <p className={resultData[i] ? 'line-correct' : 'line-wrong'} id={i}>{line}</p>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
