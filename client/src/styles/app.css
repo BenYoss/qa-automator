@@ -1,0 +1,15 @@
+.line-correct {
+    background-color: rgb(50, 135, 50);
+    color:white;
+}
+
+.line-wrong {
+    background-color: rgb(171, 45, 45);
+    color:white;
+}
+
+.line-container {
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+}

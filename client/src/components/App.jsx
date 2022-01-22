@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { pdfjs } from 'react-pdf';
 import axios from 'axios';
+import '../styles/app.css';
 
 export default function App() {
   const [mainUpload, setMainUpload] = useState(null);
@@ -11,6 +12,7 @@ export default function App() {
   const [compUpload, setCompUpload] = useState(null);
   const [compData, setCompData] = useState(null);
   const [result, setResult] = useState(false);
+  const [resultData, setResultData] = useState([]);
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
   /**
@@ -25,7 +27,10 @@ export default function App() {
        */
       if (mainData.includes(compData[i])) {
         bool = true;
+        resultData.push(true);
+        setResultData([...resultData, true]);
       } else {
+        setResultData([...resultData, false]);
         bool = false;
         break;
       }
@@ -137,12 +142,17 @@ export default function App() {
       )}
       <canvas id="pdf-canvas-main" style={{ maxWidth: '700px' }} />
       <canvas id="pdf-canvas-comp" style={{ maxWidth: '700px' }} />
-      <input type="file" onChange={(e) => setMainUpload(e.target.files[0])} />
+      <input type="file" onChange={(e) => { setMainUpload(e.target.files[0]); setResultData([]); }} />
       <button type="submit" onClick={() => uploadFile('main')}>Submit main PDF</button>
-      <input type="file" onChange={(e) => setCompUpload(e.target.files[0])} />
+      <input type="file" onChange={(e) => { setCompUpload(e.target.files[0]); setResultData([]); }} />
       <button type="submit" onClick={() => uploadFile('comp')}>Submit comparison PDF</button>
       {/* Outputs the comparison boolean result */}
       <h2>{mainUpload && compData && result ? 'TRUE' : 'FALSE'}</h2>
+      {compData && compData.map((line, i) => (
+        <div className="line-container">
+          <p className={resultData[i] ? 'line-correct' : 'line-wrong'} id={i}>{line}</p>
+        </div>
+      ))}
     </div>
   );
 }
