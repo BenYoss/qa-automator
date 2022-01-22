@@ -4,7 +4,7 @@ const path = require('path');
 const abs = path.resolve(__dirname, 'client');
 
 module.exports = {
-  entry: path.join(abs, '/src/Index.jsx'),
+  entry: ['regenerator-runtime/runtime.js', path.join(abs, '/src/Index.jsx')],
   output: {
     filename: 'bundle.js',
     path: path.join(abs, '/dist'),
@@ -23,6 +23,13 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|svg|jpg|gif|wav|mp3|eot|ttf|woff|woff2)$/,
+        exclude: /node_modules/,
+        use: [
+          'file-loader',
+        ],
       },
     ],
   },
